@@ -6,13 +6,13 @@
 # @raycast.mode compact
 
 # Optional parameters:
-# @raycast.icon 🤖
+# @raycast.icon 📥
 # @raycast.packageName Obsidian
 # @raycast.argument1 { "type": "text", "placeholder": "Task" }
 
 set -euo pipefail
 
-FILE="$HOME/Documents/Obsidian Vault/Tasks.md"
+FILE="$HOME/Documents/main/Tasks.md"
 TASK="${1:-}"
 TODAY="$(date +%F)"
 
