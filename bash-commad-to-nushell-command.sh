@@ -2,15 +2,16 @@
 
 # Required parameters:
 # @raycast.schemaVersion 1
-# @raycast.title Bash Commad to Nushell Command
+# @raycast.title Bash Command to Nushell Command
 # @raycast.mode compact
 
 # Optional parameters:
 # @raycast.icon 🐚
-# @raycast.description Convert clipboard bash multiline command to Nushell multiline command
+# @raycast.description Convert clipboard Bash command to Nushell command
 
 set -euo pipefail
 
+script_dir="$(cd "$(dirname "$0")" && pwd)"
 input="$(pbpaste)"
 
 if [[ -z "$input" ]]; then
@@ -18,15 +19,10 @@ if [[ -z "$input" ]]; then
   exit 0
 fi
 
-converted="$(
-  printf '%s\n' "$input" \
-    | sed -E 's/[[:space:]]*\\[[:space:]]*$//' \
-    | awk '
-      BEGIN { print "(" }
-      NF > 0 { print }
-      END { print ")" }
-    '
-)"
+if ! converted="$(printf '%s' "$input" | python3 "$script_dir/scripts/bash_to_nushell.py" 2>&1)"; then
+  echo "$converted"
+  exit 1
+fi
 
 printf '%s' "$converted" | pbcopy
 

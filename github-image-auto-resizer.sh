@@ -31,9 +31,7 @@ if [[ "$img_count" -eq 0 ]]; then
   exit 1
 fi
 
-if [[ "$img_count" -eq 1 ]]; then
-  width="70%"
-elif [[ "$img_count" -eq 2 ]]; then
+if [[ "$img_count" -le 2 ]]; then
   width="49%"
 else
   width="32%"
